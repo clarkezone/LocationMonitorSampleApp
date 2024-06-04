@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct LocationMonitorSampleApp: App {
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             ContentView()

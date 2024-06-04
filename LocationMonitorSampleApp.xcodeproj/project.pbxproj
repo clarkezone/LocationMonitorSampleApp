@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0853372BC86EA70033EA78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0853362BC86EA70033EA78 /* AppDelegate.swift */; };
 		1E882DAE29C3B444002069D8 /* LocationMonitorSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E882DAD29C3B444002069D8 /* LocationMonitorSampleApp.swift */; };
 		1E882DB029C3B444002069D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E882DAF29C3B444002069D8 /* ContentView.swift */; };
 		1E882DB229C3B446002069D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E882DB129C3B446002069D8 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E0853362BC86EA70033EA78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E4933EE29CA813000C83AF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E882DAA29C3B444002069D8 /* LocationMonitorSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationMonitorSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E882DAD29C3B444002069D8 /* LocationMonitorSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMonitorSampleApp.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				1E4933EE29CA813000C83AF9 /* Info.plist */,
+				1E0853362BC86EA70033EA78 /* AppDelegate.swift */,
 				1E882DAD29C3B444002069D8 /* LocationMonitorSampleApp.swift */,
 				1E882DAF29C3B444002069D8 /* ContentView.swift */,
 				1E882DB129C3B446002069D8 /* Assets.xcassets */,
@@ -81,7 +84,7 @@
 				821918FB090022B89065477C /* LICENSE.txt */,
 			);
 			name = LICENSE;
-			path = LICENSE;
+			path = .;
 			sourceTree = "<group>";
 		};
 		A9B07E75B066CBBDDA88B0D7 /* Configuration */ = {
@@ -164,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E0853372BC86EA70033EA78 /* AppDelegate.swift in Sources */,
 				1E882DB029C3B444002069D8 /* ContentView.swift in Sources */,
 				1E882DAE29C3B444002069D8 /* LocationMonitorSampleApp.swift in Sources */,
 			);
@@ -224,7 +228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -280,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -302,9 +306,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LocationMonitorSampleApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LocationMonitorSampleApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Location Monitor";
+				INFOPLIST_KEY_CFBundleDisplayName = LocationMonitorSample;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to test CLMonitor";
 				INFOPLIST_KEY_NSLocationUsageDescription = "This app needs your location to test CLMonitor";
@@ -314,6 +319,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -322,6 +328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.LocationMonitor${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -339,9 +346,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LocationMonitorSampleApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LocationMonitorSampleApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Location Monitor";
+				INFOPLIST_KEY_CFBundleDisplayName = LocationMonitorSample;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to test CLMonitor";
 				INFOPLIST_KEY_NSLocationUsageDescription = "This app needs your location to test CLMonitor";
@@ -351,6 +359,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,6 +368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.LocationMonitor${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
