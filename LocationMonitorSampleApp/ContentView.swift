@@ -7,10 +7,11 @@ The app's main view.
 
 import SwiftUI
 import CoreLocation
+import SwiftData
 
 let monitorName = "SampleMonitor"
-let appleParkLocation = CLLocationCoordinate2D(latitude: 37.3346, longitude: -122.0090)
-let testBeaconId = UUID(uuidString: "A2C56DB5-DFFB-48D2-B060-D0F5A71096E0")!
+let appleParkLocation = CLLocationCoordinate2D(latitude: 47.650441, longitude: -122.117848)
+let testBeaconId = UUID(uuidString: "FDA50693-A4E2-4FB1-AFCF-C6EB07647825")!
 
 let globalAuthDeniedError = "Please enable Location Services by going to Settings -> Privacy & Security"
 let authDeniedError = "Please authorize LocationMonitorSampleApp to access Location Services"
@@ -56,7 +57,7 @@ public class ObservableMonitorModel: ObservableObject {
         notificationContent.body = "Can't receive condition events while not in the foreground"
         
         Task {
-            try await notificationCenter.requestAuthorization(options: [.badge])
+            try await UNUserNotificationCenter.current().requestAuthorization(options: [.badge])
         }
     }
     
@@ -68,7 +69,7 @@ public class ObservableMonitorModel: ObservableObject {
                 lastDiagnosticUpdate = diagnostics
                 let notification = UNNotificationRequest(identifier: "com.example.mynotification", content: notificationContent, trigger: nil)
                 if diagnostics.insufficientlyInUse {
-                    try await notificationCenter.add(notification)
+                    //try await UNUserNotificationCenter.current().add(notification)
                 }
             }
         }
@@ -76,6 +77,8 @@ public class ObservableMonitorModel: ObservableObject {
     
     func startMonitoringConditions() {
         Task {
+            let container = try ModelContainer(for: LMEvent.self)
+            let context = ModelContext(container)
             print("Set up monitor")
             monitor = await CLMonitor(monitorName)
             
@@ -98,6 +101,9 @@ public class ObservableMonitorModel: ObservableObject {
                 }
                 UIRows[event.identifier] = [event]
                 UIRows[event.identifier]?.append(lastEvent)
+                let newEvent = LMEvent(date: event.date, identifier: event.identifier, state: event.state)
+                context.insert(newEvent)
+                try context.save()
             }
         }
     }
@@ -112,7 +118,9 @@ public class ObservableMonitorModel: ObservableObject {
 }
 
 struct ContentView: View {
+    @Environment(\.modelContext) var ModelContext
     @ObservedObject fileprivate var locationMonitor = ObservableMonitorModel.shared
+    @Query(sort: [SortDescriptor(\LMEvent.date)]) var lmevents: [LMEvent]
     
     var body: some View {
         if locationMonitor.authSessionActive {
@@ -134,56 +142,68 @@ struct ContentView: View {
         }
         
         VStack {
-            ScrollView {
-                VStack {
-                    ForEach(locationMonitor.UIRows.keys.sorted(), id: \.self) {condition in
-                        HStack(alignment: .top) {
-                            Button(action: {
-                                Task {
-                                    await locationMonitor.monitor?.remove(condition)
-                                    await locationMonitor.updateRecords()
-                                }
-                            }) {
-                                Image(systemName: "xmark.circle")
-                            }
-                            Text(condition)
-                            ScrollViewReader {reader in
-                                ScrollView {
-                                    VStack {
-                                        ForEach((locationMonitor.UIRows[condition] ?? []).indices, id: \.self) {index in
-                                            HStack {
-                                                switch locationMonitor.UIRows[condition]![index].state {
-                                                case .satisfied: Text("Satisfied")
-                                                case .unsatisfied: Text("Unsatisfied")
-                                                case .unknown: Text("Unknown")
-                                                case .unmonitored: Text("Unmonitored")
-                                                @unknown default:
-                                                    fatalError()
-                                                }
-                                                Text(locationMonitor.UIRows[condition]![index].date, style: .time)
-                                            }
-                                        }
-                                        Text("")
-                                            .frame(height: 5)
-                                            .id("lastElement")
-                                    }
-                                }
-                                .frame(height: 40)
-                                .onChange(of: locationMonitor.UIRows[condition]?.count) {
-                                    reader.scrollTo("lastElement")
-                                    Task {
-                                        sleep(1)
-                                        withAnimation(.easeInOut(duration: 3)) {
-                                            reader.scrollTo(0)
-                                        }
-                                    }
-                                }
-                            }
+                if lmevents.count > 0 {
+                    List(lmevents) {
+                        eve in
+                        HStack {
+                            Text("\(eve.identifier ?? "")")
+                            Text("EV: \(String(describing: eve.date)) \(eve.state?.description ?? "")")
                         }
                     }
-                    .padding(20)
+                } else {
+                    Text("No events")
                 }
-            }
+            Spacer()
+//            ScrollView {
+//                VStack {
+//                    ForEach(locationMonitor.UIRows.keys.sorted(), id: \.self) {condition in
+//                        HStack(alignment: .top) {
+//                            Button(action: {
+//                                Task {
+//                                    await locationMonitor.monitor?.remove(condition)
+//                                    await locationMonitor.updateRecords()
+//                                }
+//                            }) {
+//                                Image(systemName: "xmark.circle")
+//                            }
+//                            Text(condition)
+//                            ScrollViewReader {reader in
+//                                ScrollView {
+//                                    VStack {
+//                                        ForEach((locationMonitor.UIRows[condition] ?? []).indices, id: \.self) {index in
+//                                            HStack {
+//                                                switch locationMonitor.UIRows[condition]![index].state {
+//                                                case .satisfied: Text("Satisfied")
+//                                                case .unsatisfied: Text("Unsatisfied")
+//                                                case .unknown: Text("Unknown")
+//                                                case .unmonitored: Text("Unmonitored")
+//                                                @unknown default:
+//                                                    fatalError()
+//                                                }
+//                                                Text(locationMonitor.UIRows[condition]![index].date, style: .time)
+//                                            }
+//                                        }
+//                                        Text("")
+//                                            .frame(height: 5)
+//                                            .id("lastElement")
+//                                    }
+//                                }
+//                                .frame(height: 40)
+//                                .onChange(of: locationMonitor.UIRows[condition]?.count) {
+//                                    reader.scrollTo("lastElement")
+//                                    Task {
+//                                        sleep(1)
+//                                        withAnimation(.easeInOut(duration: 3)) {
+//                                            reader.scrollTo(0)
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                    .padding(20)
+//                }
+//            }
         }
         Divider()
         .padding(25)

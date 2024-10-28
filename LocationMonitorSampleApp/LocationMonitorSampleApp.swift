@@ -6,6 +6,7 @@ The app's entry point.
 */
 
 import SwiftUI
+import SwiftData
 
 @main
 struct LocationMonitorSampleApp: App {
@@ -15,5 +16,6 @@ struct LocationMonitorSampleApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: LMEvent.self)
     }
 }
