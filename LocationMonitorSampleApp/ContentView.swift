@@ -31,7 +31,6 @@ extension UserDefaults {
 @MainActor
 public class ObservableMonitorModel: ObservableObject {
     
-    //private let manager: CLLocationManager
     
     // The model doesn't read the published variables. The system only writes them to drive the UI.
     // The CLMonitor state is the only source of truth.
